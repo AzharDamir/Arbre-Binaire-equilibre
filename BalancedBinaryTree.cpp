@@ -3,50 +3,18 @@
 BalancedBinaryTree::BalancedBinaryTree()
 {
     root = NULL;
+   
 }
-
-Node* BalancedBinaryTree::balanceBSThelp1(vector<int>& v, int s, int e) {
+Node* BalancedBinaryTree::balanceBST(int s, int e) {
     if (s > e)
         return NULL;
     int middle = s + (e - s) / 2;
-    Node* root = new Node(v[middle]);
-    root->right = balanceBSThelp1(v, middle + 1, e);
-    root->left = balanceBSThelp1(v, s, middle - 1);
+    set<int>::iterator it = v.begin();
+    Node* root = new Node(*it);
+    v.erase(it);
+    root->right = balanceBST(middle + 1, e);
+    root->left = balanceBST(s, middle - 1);
     return root;
-}
-
-void BalancedBinaryTree::balanceBSThelp2(vector<int>& v,Node* root) {
-    if (!root) return;
-    balanceBSThelp2(v,root->left);
-    v.push_back(root->data);
-    balanceBSThelp2(v, root->right);
-}
-Node* BalancedBinaryTree::balanceBST(Node* root) {
-    vector<int> v;
-    balanceBSThelp2(v, root);
-    return balanceBSThelp1(v, 0, v.size() - 1);
-}
-
-Node* BalancedBinaryTree::insert(Node* new_node, Node* r)
-{
-    if (r == NULL) {
-        r = new_node;
-        cout << "Value inserted successfully" << endl;
-        return r;
-    }
-    if (new_node->data < r->data) {
-        r->left = insert( new_node, r->left);
-    }
-    else if (new_node->data > r->data) {
-        r->right = insert( new_node, r->right);
-    }
-    else {
-        cout << "No duplicate values allowed!" << endl;
-        return r;
-    }
-
-    return balanceBST(r);
-    
 }
 
 Node* BalancedBinaryTree::minValueNode(Node* node) {
@@ -69,7 +37,6 @@ Node* BalancedBinaryTree::deleteNode(Node* r, int v) {
     else if (v > r->data) {
         r->right = deleteNode(r->right, v);
     }
-    // if key is same as root's key, then This is the node to be deleted 
     else {
         if (r->left == NULL) {
             Node* temp = r->right;
@@ -91,7 +58,6 @@ Node* BalancedBinaryTree::deleteNode(Node* r, int v) {
     }
     return r;
 }
-
 
 bool BalancedBinaryTree::isTreeEmpty()
 {

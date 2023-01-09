@@ -6,8 +6,7 @@ using namespace std;
 int main()
 {
     BalancedBinaryTree obj;
-    int option, val;
-
+    int option, val=1;
     do {
         cout << "What operation do you want to perform? " <<
             " Select Option number. Enter 0 to exit." << endl;
@@ -26,12 +25,13 @@ int main()
         case 0:
             break;
         case 1:
-            cout << "INSERT" << endl;
-            cout << "Enter VALUE of TREE NODE to INSERT in AVL Tree: ";
-            cin >> val;
-            new_node->data = val;
-            obj.root = obj.insert(new_node, obj.root);
-            cout << endl;
+            while (val <100000) {
+                Node* node = new Node();
+                node->data = val;
+                obj.v.insert(val);
+                val++;
+            }
+            obj.root = obj.balanceBST(0, obj.v.size()-1);
             break;
         case 2:
             cout << "SEARCH" << endl;
